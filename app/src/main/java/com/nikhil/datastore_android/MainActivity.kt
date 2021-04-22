@@ -15,41 +15,39 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    private var _binding: ActivityMainBinding? = null
-    private val binding get() = _binding!!
+    private var bindingActivity: ActivityMainBinding? = null
+    private val binding get() = bindingActivity!!
     private lateinit var dataStore: DataStore<Preferences>
+    private val dbName : String =  "DemoDB"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityMainBinding.inflate(layoutInflater)
+        bindingActivity = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        dataStore = createDataStore(name = "settings")
+        dataStore = createDataStore(name = dbName)
 
         binding.btnSave.setOnClickListener {
             lifecycleScope.launch {
-                save(
-                    binding.editTextTextKey.text.toString().trim(),
-                    binding.editTextTextValue.text.toString().trim()
-                )
+                saveValueToDatStore(binding.editTextTextKey.text.toString().trim(), binding.editTextTextValue.text.toString().trim())
             }
         }
 
-        binding.buttonRead.setOnClickListener {
+        binding.buttonGet.setOnClickListener {
             lifecycleScope.launch {
-                val value = read(binding.editTextTextGetValue.text.toString().trim())
+                val value = getValueFromDataStore(binding.editTextGetValue.text.toString().trim())
                 Toast.makeText(this@MainActivity, "Value --> ${value ?: "No Value Found"}",Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private suspend fun save(key: String, value: String) {
+    private suspend fun saveValueToDatStore(key: String, value: String) {
         val dataStoreKey = preferencesKey<String>(key)
-        dataStore.edit { settings ->
-            settings[dataStoreKey] = value
+        dataStore.edit { data ->
+            data[dataStoreKey] = value
         }
     }
 
-    private suspend fun read(key: String): String? {
+    private suspend fun getValueFromDataStore(key: String): String? {
         val dataStoreKey = preferencesKey<String>(key)
         val preferences = dataStore.data.first()
         return preferences[dataStoreKey]
