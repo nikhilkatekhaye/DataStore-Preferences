@@ -15,10 +15,10 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
+    private val dbName: String = "DemoDB"
     private var bindingActivity: ActivityMainBinding? = null
     private val binding get() = bindingActivity!!
     private lateinit var dataStore: DataStore<Preferences>
-    private val dbName : String =  "DemoDB"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,14 +28,21 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnSave.setOnClickListener {
             lifecycleScope.launch {
-                saveValueToDatStore(binding.editTextTextKey.text.toString().trim(), binding.editTextTextValue.text.toString().trim())
+                saveValueToDatStore(
+                    binding.editTextKey.text.toString().trim(),
+                    binding.editTextValue.text.toString().trim()
+                )
             }
         }
 
         binding.buttonGet.setOnClickListener {
             lifecycleScope.launch {
-                val value = getValueFromDataStore(binding.editTextGetValue.text.toString().trim())
-                Toast.makeText(this@MainActivity, "Value --> ${value ?: "No Value Found"}",Toast.LENGTH_SHORT).show()
+                val value = getValueFromDataStore(binding.editTextKey.text.toString().trim())
+                Toast.makeText(
+                    this@MainActivity,
+                    "Value --> ${value ?: "No Value Found"}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

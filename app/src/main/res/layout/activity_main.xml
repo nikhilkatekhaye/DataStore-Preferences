@@ -11,17 +11,17 @@
         android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editTextTextKey"
+        android:id="@+id/edtTextKey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Key"
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editTextTextValue"
+        android:id="@+id/editTextValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextTextKey"
+        android:layout_below="@+id/edtTextKey"
         android:ems="10"
         android:hint="Value"
         android:inputType="textPersonName" />
@@ -30,13 +30,13 @@
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextTextValue"
+        android:layout_below="@+id/editTextValue"
         android:layout_marginTop="20dp"
         android:text="Save" />
 
 
     <EditText
-        android:id="@+id/editTextGetValue"
+        android:id="@+id/editTextKey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -48,7 +48,7 @@
         android:id="@+id/buttonGet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextGetValue"
+        android:layout_below="@+id/editTextKey"
         android:layout_marginTop="20dp"
         android:text="Get" />
 
